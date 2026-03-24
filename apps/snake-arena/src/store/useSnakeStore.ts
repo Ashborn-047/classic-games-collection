@@ -5,22 +5,36 @@ import { immer } from 'zustand/middleware/immer';
  * Snake Arena Game Store
  * Handles local state, input buffering, and server-sync data.
  */
-export const useSnakeStore = create(
-  immer((set, get) => ({
-    // Game Configuration
+interface Point { x: number; y: number; }
+interface FoodItem { x: number; y: number; type: string; }
+interface Snake { segments: Point[]; color: string; direction: string; score: number; isAlive: boolean; }
+
+interface SnakeState {
+  gridSize: number;
+  tickRate: number;
+  gameState: 'LOBBY' | 'PLAYING' | 'GAME_OVER';
+  snakes: Record<string, Snake>;
+  food: FoodItem[];
+  score: number;
+  highScore: number;
+  inputBuffer: string[];
+  setGameState: (state: 'LOBBY' | 'PLAYING' | 'GAME_OVER') => void;
+  updateStateFromServer: (serverData: any) => void;
+  addInput: (direction: string) => void;
+  consumeInput: () => void;
+}
+
+export const useSnakeStore = create<SnakeState>()(
+  immer((set) => ({
     gridSize: 20,
     tickRate: 150,
-    
-    // Core State
-    gameState: 'LOBBY', // LOBBY, PLAYING, GAME_OVER
-    snakes: {},        // { id: { segments: [], color, direction, score } }
-    food: [],          // [ { x, y, type } ]
-    
-    // UI State
+    gameState: 'LOBBY',
+    snakes: {},
+    food: [],
     score: 0,
     highScore: 0,
-    
-    // Actions
+    inputBuffer: [],
+
     setGameState: (state) => set((s) => { s.gameState = state; }),
     
     updateStateFromServer: (serverData) => set((s) => {
@@ -29,10 +43,7 @@ export const useSnakeStore = create(
       s.gameState = serverData.gameState;
     }),
     
-    // Local Input Buffering
-    inputBuffer: [],
     addInput: (direction) => set((s) => {
-      // Limit buffer depth to 2 as per plan
       if (s.inputBuffer.length < 2) {
         s.inputBuffer.push(direction);
       }

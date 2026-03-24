@@ -3,15 +3,15 @@
  * Runs on a separate thread to maintain 60FPS despite React reconciliation.
  */
 
-let canvas = null;
-let ctx = null;
+let canvas: OffscreenCanvas | null = null;
+let ctx: OffscreenCanvasRenderingContext2D | null = null;
 
-self.onmessage = (e) => {
+self.onmessage = (e: MessageEvent) => {
   const { type, payload } = e.data;
 
   if (type === 'INIT') {
     canvas = payload.canvas;
-    ctx = canvas.getContext('2d');
+    ctx = canvas!.getContext('2d') as OffscreenCanvasRenderingContext2D;
   }
 
   if (type === 'RENDER') {
@@ -19,8 +19,14 @@ self.onmessage = (e) => {
   }
 };
 
-function render({ snakes, food, gridSize }) {
-  if (!ctx) return;
+interface RenderPayload {
+  snakes: Record<string, any>;
+  food: any[];
+  gridSize: number;
+}
+
+function render({ snakes, food, gridSize }: RenderPayload) {
+  if (!ctx || !canvas) return;
 
   const cellSize = canvas.width / gridSize;
 
@@ -37,12 +43,12 @@ function render({ snakes, food, gridSize }) {
   });
 
   // 3. Draw Snakes
-  Object.values(snakes).forEach(snake => {
+  Object.values(snakes).forEach((snake: any) => {
     ctx.fillStyle = snake.color || '#00ff00';
     ctx.shadowBlur = 5;
     ctx.shadowColor = ctx.fillStyle;
     
-    snake.segments.forEach((seg, i) => {
+    snake.segments.forEach((seg: any, i: number) => {
       // Head has slightly different color/look
       if (i === 0) {
         ctx.globalAlpha = 1.0;
