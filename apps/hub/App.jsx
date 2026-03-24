@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Gamepad2, LayoutGrid, Swords, Zap, ChevronRight, Trophy, Users } from 'lucide-react';
+import { Gamepad2, LayoutGrid, Swords, Zap, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { NeoButton, NeoCard, NeoTag } from '@classic-games/shared-ui';
 
-// Import Games from consolidated locations
-import SnakeArena from './games/snake-arena/App';
-import SnakesAndLadders from './games/snakes-and-ladders/App';
-import Ludo from './games/ludo/App';
+// Games are now imported as workspace packages
+import SnakeArena from '@classic-games/snake-arena';
+import SnakesAndLadders from '@classic-games/snakes-and-ladders';
+import Ludo from '@classic-games/ludo-pro';
 
 const GAMES = [
   {
@@ -13,8 +14,7 @@ const GAMES = [
     name: 'Snake Arena',
     description: 'Grow your snake and dominate the arena in this 3-mode real-time classic.',
     icon: <Zap size={40} />,
-    color: '#ff2a2a',
-    bg: 'bg-red-500',
+    color: 'bg-red-500',
     tags: ['Real-time', 'PvP', 'AI'],
     component: SnakeArena
   },
@@ -23,8 +23,7 @@ const GAMES = [
     name: 'Snakes & Ladders',
     description: 'The ancient Indian board game with multiple themes and SpacetimeDB multiplayer.',
     icon: <Swords size={40} />,
-    color: '#fbbf24',
-    bg: 'bg-yellow-500',
+    color: 'bg-yellow-500',
     tags: ['Board', 'Turns', '4 Themes'],
     component: SnakesAndLadders
   },
@@ -33,8 +32,7 @@ const GAMES = [
     name: 'Ludo Modern',
     description: 'Classic Ludo with a modern Rust engine and real-time capture mechanics.',
     icon: <LayoutGrid size={40} />,
-    color: '#3b82f6',
-    bg: 'bg-blue-500',
+    color: 'bg-blue-500',
     tags: ['Board', 'Strategy', 'Multiplayer'],
     component: Ludo
   }
@@ -68,7 +66,7 @@ export default function App() {
             <p className="text-sm md:text-lg font-bold text-gray-400 mt-2 uppercase tracking-widest">Advanced Game Collection</p>
           </div>
           <div className="absolute -top-6 -right-10 bg-yellow-300 border-4 border-black px-4 py-2 rotate-12 shadow-[4px_4px_0px_0px_#000]">
-             <span className="font-black text-xs">V1.0.0</span>
+             <span className="font-black text-xs">V2.0.0</span>
           </div>
         </div>
       </div>
@@ -76,38 +74,27 @@ export default function App() {
       {/* Game Grid */}
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
         {GAMES.map((game, idx) => (
-          <motion.div
-            key={game.id}
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: idx * 0.1 }}
-            className="group relative"
-          >
-            <div className="absolute inset-0 bg-black translate-x-3 translate-y-3 transition-transform group-hover:translate-x-5 group-hover:translate-y-5" />
-            <div className={`relative bg-white border-8 border-black p-8 h-full flex flex-col items-start transition-transform group-hover:-translate-x-1 group-hover:-translate-y-1`}>
-              <div className={`p-4 ${game.bg} border-4 border-black mb-6 text-white shadow-[4px_4px_0px_0px_#000]`}>
-                {game.icon}
-              </div>
-              
-              <h2 className="text-3xl font-black uppercase mb-4 leading-none">{game.name}</h2>
-              <p className="text-sm font-bold text-gray-500 mb-8 flex-grow">{game.description}</p>
-              
-              <div className="flex flex-wrap gap-2 mb-8">
-                {game.tags.map(tag => (
-                  <span key={tag} className="bg-gray-100 border-2 border-black px-2 py-1 text-[10px] font-black uppercase">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              <button 
-                onClick={() => setActiveGame(game.id)}
-                className={`w-full ${game.bg} text-white border-4 border-black py-4 font-black uppercase text-xl shadow-[6px_6px_0px_0px_#000] hover:shadow-none translate-y-0 hover:translate-x-1 hover:translate-y-1 transition-all flex items-center justify-center gap-2`}
-              >
-                Launch Game <ChevronRight size={20} />
-              </button>
+          <NeoCard key={game.id} delay={idx * 0.1}>
+            <div className={`p-4 ${game.color} border-4 border-black mb-6 text-white shadow-[4px_4px_0px_0px_#000]`}>
+              {game.icon}
             </div>
-          </motion.div>
+            
+            <h2 className="text-3xl font-black uppercase mb-4 leading-none">{game.name}</h2>
+            <p className="text-sm font-bold text-gray-500 mb-8 flex-grow">{game.description}</p>
+            
+            <div className="flex flex-wrap gap-2 mb-8">
+              {game.tags.map(tag => <NeoTag key={tag}>{tag}</NeoTag>)}
+            </div>
+
+            <NeoButton 
+              onClick={() => setActiveGame(game.id)}
+              color={game.color}
+              className="w-full"
+              icon={ChevronRight}
+            >
+              Launch Game
+            </NeoButton>
+          </NeoCard>
         ))}
       </div>
 
@@ -115,8 +102,8 @@ export default function App() {
       <div className="mt-20 text-center">
         <div className="inline-flex gap-8 text-[12px] font-black uppercase opacity-20">
           <span>SpacetimeDB Powered</span>
-          <span>Neo-Brutalist Design</span>
-          <span>Made for Gamers</span>
+          <span>Turbo Monorepo</span>
+          <span>Shared UI Framework</span>
         </div>
       </div>
     </div>
