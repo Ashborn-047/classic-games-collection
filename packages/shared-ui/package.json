@@ -1,0 +1,11 @@
+{
+  "name": "@classic-games/shared-ui",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./index.js",
+  "dependencies": {
+    "react": "^18.3.1",
+    "lucide-react": "^0.439.0"
+  }
+}
