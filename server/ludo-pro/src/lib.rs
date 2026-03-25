@@ -20,8 +20,18 @@ pub struct LudoPlayer {
 
 #[spacetimedb(reducer)]
 pub fn move_token(ctx: ReducerContext, code: String, token_id: usize, dice: u8) -> Result<(), String> {
+    // SECURITY: Input Validation
+    if dice < 1 || dice > 6 {
+        return Err("Invalid dice roll value".into());
+    }
+
     let mut room = LudoRoom::filter_by_code(&code).ok_or("Room not found")?;
     let mut player = LudoPlayer::filter_by_identity(&ctx.sender).ok_or("Player not found")?;
+
+    // SECURITY: Prevent index out of bounds panic (DoS)
+    if token_id >= player.tokens.len() {
+        return Err("Invalid token ID".into());
+    }
 
     let old_pos = player.tokens[token_id];
     let mut new_pos = old_pos;
