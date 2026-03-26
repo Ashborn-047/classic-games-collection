@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 export const NeoButton = ({ children, onClick, className = '', color = 'bg-blue-500', icon: Icon }) => (
   <button 
     onClick={onClick}
-    className={`relative group ${className}`}
+    className={`relative group focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-black focus-visible:ring-offset-2 ${className}`}
   >
     <div className="absolute inset-0 bg-black translate-x-1 translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0 transition-all" />
     <div className={`relative ${color} text-white border-4 border-black px-6 py-3 font-black uppercase flex items-center justify-center gap-2 -translate-x-1 -translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0 transition-all`}>
