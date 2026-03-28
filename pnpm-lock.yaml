@@ -14,12 +14,21 @@ importers:
 
   apps/hub:
     dependencies:
+      '@classic-games/ludo-pro':
+        specifier: workspace:*
+        version: link:../ludo-pro
       '@classic-games/shared-types':
         specifier: workspace:*
         version: link:../../packages/shared-types
       '@classic-games/shared-ui':
         specifier: workspace:*
         version: link:../../packages/shared-ui
+      '@classic-games/snake-arena':
+        specifier: workspace:*
+        version: link:../snake-arena
+      '@classic-games/snakes-and-ladders':
+        specifier: workspace:*
+        version: link:../snakes-and-ladders
       framer-motion:
         specifier: ^11.5.4
         version: 11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)

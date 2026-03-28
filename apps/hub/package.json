@@ -16,7 +16,10 @@
     "zustand": "^4.5.5",
     "immer": "^10.1.1",
     "@classic-games/shared-ui": "workspace:*",
-    "@classic-games/shared-types": "workspace:*"
+    "@classic-games/shared-types": "workspace:*",
+    "@classic-games/snake-arena": "workspace:*",
+    "@classic-games/snakes-and-ladders": "workspace:*",
+    "@classic-games/ludo-pro": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "^18.3.5",

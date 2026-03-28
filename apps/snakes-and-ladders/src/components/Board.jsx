@@ -1,23 +1,37 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { GRID_SIZE, BOARD_SIZE, SNAKES, LADDERS } from '../config/snlConfig';
 
+// ⚡ Bolt: Cache static cells array outside the component to prevent
+// recreating a 100-element array on every render.
+const STATIC_CELLS = [];
+for (let i = 0; i < BOARD_SIZE; i++) {
+  // Zig-zag pattern
+  const row = Math.floor(i / GRID_SIZE);
+  const col = row % 2 === 0
+    ? i % GRID_SIZE
+    : (GRID_SIZE - 1) - (i % GRID_SIZE);
+
+  const cellId = BOARD_SIZE - i;
+  STATIC_CELLS.push(cellId);
+}
+
 export default function Board({ players, theme }) {
-  const cells = [];
-  for (let i = 0; i < BOARD_SIZE; i++) {
-    // Zig-zag pattern
-    const row = Math.floor(i / GRID_SIZE);
-    const col = row % 2 === 0 
-      ? i % GRID_SIZE 
-      : (GRID_SIZE - 1) - (i % GRID_SIZE);
-    
-    const cellId = BOARD_SIZE - i;
-    cells.push(cellId);
-  }
+  // ⚡ Bolt: Create an O(1) lookup map for players by position
+  // Replaces the O(N * M) players.filter() running inside a 100-item map loop
+  const playersByPos = useMemo(() => {
+    const map = {};
+    players.forEach(p => {
+      if (!map[p.pos]) map[p.pos] = [];
+      map[p.pos].push(p);
+    });
+    return map;
+  }, [players]);
 
   return (
     <div className={`grid grid-cols-10 border-8 border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] ${theme.bg}`}>
-      {cells.map((id, index) => {
-        const playerAtCell = players.filter(p => p.pos === id);
+      {STATIC_CELLS.map((id, index) => {
+        // ⚡ Bolt: O(1) lookup
+        const playerAtCell = playersByPos[id] || [];
         
         return (
           <div 
