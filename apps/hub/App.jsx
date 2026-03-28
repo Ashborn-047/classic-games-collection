@@ -47,7 +47,8 @@ export default function App() {
       <div className="relative">
         <button 
           onClick={() => setActiveGame(null)}
-          className="fixed top-4 left-4 z-[9999] bg-white border-4 border-black px-4 py-2 font-black uppercase text-xs shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all"
+          aria-label="Back to game hub"
+          className="fixed top-4 left-4 z-[9999] bg-white border-4 border-black px-4 py-2 font-black uppercase text-xs shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-black focus-visible:ring-offset-2 transition-all"
         >
           ← Back to Hub
         </button>
