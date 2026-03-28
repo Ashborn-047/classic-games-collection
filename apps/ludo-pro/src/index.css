@@ -1,0 +1,85 @@
+/* Ludo Pro - Original Board & Token Styles */
+:root {
+  --ludo-red: #FF3366;
+  --ludo-green: #00FF66;
+  --ludo-yellow: #FFCC00;
+  --ludo-blue: #33CCFF;
+}
+
+.ludo-grid {
+  display: grid;
+  grid-template-columns: repeat(15, 1fr);
+  grid-template-rows: repeat(15, 1fr);
+  gap: 1.5px;
+  background: #1e293b; /* Slate-800 */
+  border: 4px solid #1e293b;
+  border-radius: 8px;
+  aspect-ratio: 1;
+  width: 100%;
+}
+
+.ludo-cell {
+  background: white;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.ludo-token {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 20;
+}
+
+.ludo-token:hover {
+  transform: scale(1.3) translateY(-2px);
+  z-index: 30;
+}
+
+.ludo-token.active {
+  animation: token-bounce 1s infinite alternate;
+  box-shadow: 0 0 12px currentColor;
+}
+
+@keyframes token-bounce {
+  from { transform: translateY(0); }
+  to { transform: translateY(-4px); }
+}
+
+/* Home Bases */
+.home-base {
+  grid-column: span 6;
+  grid-row: span 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.inner-base {
+  width: 70%;
+  height: 70%;
+  background: rgba(255,255,255,0.9);
+  border-radius: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  padding: 12px;
+  gap: 12px;
+}
+
+.base-token-slot {
+  border-radius: 50%;
+  background: #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

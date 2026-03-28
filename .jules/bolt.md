@@ -1,3 +1,0 @@
-## 2024-10-24 - React Static Grid Rendering O(N*M) Antipattern
-**Learning:** In highly dynamic board games (like Snakes & Ladders), rendering large static grids with inline data calculations causes extreme performance degradation. Calculating a 100+ element grid array inside the component and doing a `players.filter()` on each grid cell during rendering creates an O(N*M) loop that fires on every single state change.
-**Action:** Always extract static board generation logic outside of the React component. Use `useMemo` to pre-calculate entity positions into an O(1) hash map before mapping over the grid array to keep rendering loops purely presentational.

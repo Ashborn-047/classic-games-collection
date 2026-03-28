@@ -9,24 +9,25 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "framer-motion": "^11.5.4",
-    "lucide-react": "^0.439.0",
-    "zustand": "^4.5.5",
-    "immer": "^10.1.1",
-    "@classic-games/shared-ui": "workspace:*",
+    "@classic-games/ludo-pro": "workspace:*",
     "@classic-games/shared-types": "workspace:*",
+    "@classic-games/shared-ui": "workspace:*",
     "@classic-games/snake-arena": "workspace:*",
     "@classic-games/snakes-and-ladders": "workspace:*",
-    "@classic-games/ludo-pro": "workspace:*"
+    "framer-motion": "^11.5.4",
+    "gsap": "^3.14.2",
+    "immer": "^10.1.1",
+    "lucide-react": "^0.439.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zustand": "^4.5.5"
   },
   "devDependencies": {
+    "@tailwindcss/vite": "^4.2.2",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
-    "vite": "^5.4.2",
-    "tailwindcss": "next",
-    "@tailwindcss/vite": "next"
+    "tailwindcss": "^4.2.2",
+    "vite": "^5.4.2"
   }
 }

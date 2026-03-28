@@ -1,5 +1,3 @@
-@import "tailwindcss";
-
 :root {
   --color-background: #0e0e0e;
   --color-primary: #8cf6ff;
@@ -31,8 +29,6 @@
       linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
       linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
     background-size: 100% 100%, 40px 40px, 40px 40px;
-    touch-action: none;
-    overscroll-behavior: none;
   }
   
   h1, h2, h3, h4, h5, h6 {

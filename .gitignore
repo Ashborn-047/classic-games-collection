@@ -4,6 +4,10 @@ dist/
 .env
 .DS_Store
 *.log
+# Local AI Agent Data
+.agents/
+.jules/
+.gemini/
 .spacetimedb/
 target/
 debug/
