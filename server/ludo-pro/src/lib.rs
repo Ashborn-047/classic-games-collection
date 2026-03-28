@@ -23,6 +23,16 @@ pub fn move_token(ctx: &ReducerContext, code: String, token_id: u32, dice: u8) -
     let room = ctx.db.ludo_room().code().find(&code).ok_or("Room not found")?;
     let player = ctx.db.ludo_player().identity().find(&ctx.sender()).ok_or("Player not found")?;
 
+    // SECURITY: Prevent index out of bounds panic (DoS) - ported from PR #1
+    if (token_id as usize) >= player.tokens.len() {
+        return Err("Invalid token ID".into());
+    }
+
+    // SECURITY: Validate dice value is within legal range
+    if dice < 1 || dice > 6 {
+        return Err("Invalid dice value".into());
+    }
+
     let old_pos = player.tokens[token_id as usize];
     let mut new_pos: i32 = old_pos;
 
