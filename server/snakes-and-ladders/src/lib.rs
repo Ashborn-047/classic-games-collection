@@ -1,8 +1,8 @@
-use spacetimedb::{spacetimedb, ReducerContext, Identity};
+use spacetimedb::{table, reducer, ReducerContext, Table, Identity};
 
-#[spacetimedb(table)]
+#[table(accessor = snl_room, public)]
 pub struct SnLRoom {
-    #[primarykey]
+    #[primary_key]
     pub code: String,
     pub host: Identity,
     pub status: String,
@@ -10,9 +10,9 @@ pub struct SnLRoom {
     pub last_die_roll: u8,
 }
 
-#[spacetimedb(table)]
+#[table(accessor = snl_player, public)]
 pub struct SnLPlayer {
-    #[primarykey]
+    #[primary_key]
     pub identity: Identity,
     pub room_code: String,
     pub name: String,
@@ -20,20 +20,22 @@ pub struct SnLPlayer {
     pub color: String,
 }
 
-#[spacetimedb(reducer)]
-pub fn roll_die(ctx: ReducerContext, code: String) -> Result<(), String> {
-    let mut room = SnLRoom::filter_by_code(&code).ok_or("Room not found")?;
-    let players = SnLPlayer::filter_by_room_code(&code);
+#[reducer]
+pub fn roll_die(ctx: &ReducerContext, code: String) -> Result<(), String> {
+    let room = ctx.db.snl_room().code().find(&code).ok_or("Room not found")?;
+    let players: Vec<_> = ctx.db.snl_player().iter().filter(|p| p.room_code == code).collect();
     
-    if players[room.turn_index as usize].identity != ctx.sender {
+    if players[room.turn_index as usize].identity != ctx.sender() {
         return Err("Not your turn".into());
     }
 
-    use rand::Rng;
-    let roll = rand::thread_rng().gen_range(1..=6);
+    // Use timestamp for pseudo-randomness in WASM
+    let roll = (ctx.timestamp.to_micros_since_unix_epoch() % 6 + 1) as u8;
+    
+    let mut room = room;
     room.last_die_roll = roll;
 
-    let mut player = SnLPlayer::filter_by_identity(&ctx.sender).unwrap();
+    let mut player = ctx.db.snl_player().identity().find(&ctx.sender()).unwrap();
     let old_pos = player.position;
     let mut new_pos = old_pos + roll;
 
@@ -45,26 +47,26 @@ pub fn roll_die(ctx: ReducerContext, code: String) -> Result<(), String> {
     new_pos = apply_board_rules(new_pos);
 
     player.position = new_pos;
-    SnLPlayer::update_by_identity(&ctx.sender, player);
+    ctx.db.snl_player().identity().update(player);
 
     // Next turn
     room.turn_index = (room.turn_index + 1) % players.len() as u32;
-    SnLRoom::update_by_code(&code, room);
+    ctx.db.snl_room().code().update(room);
 
     Ok(())
 }
 
 fn apply_board_rules(pos: u8) -> u8 {
-    let mut rules = std::collections::HashMap::new();
-    // Ladders
-    rules.insert(2, 38);
-    rules.insert(7, 14);
-    rules.insert(8, 31);
-    rules.insert(15, 26);
-    // Snakes
-    rules.insert(16, 6);
-    rules.insert(46, 25);
-    rules.insert(49, 11);
-    // ... add more ...
-    *rules.get(&pos).unwrap_or(&pos)
+    match pos {
+        // Ladders
+        2 => 38,
+        7 => 14,
+        8 => 31,
+        15 => 26,
+        // Snakes
+        16 => 6,
+        46 => 25,
+        49 => 11,
+        _ => pos,
+    }
 }
