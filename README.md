@@ -9,13 +9,31 @@ A production-grade, **Neo-Brutalist** collection of classic board and arcade gam
 
 ## 🛠️ Technology Stack
 
-| Layer | Technology |
-|---|---|
-| **Monorepo** | Turborepo + pnpm |
-| **Frontend** | React 18 + Vite + Tailwind CSS v4 + Vanilla CSS |
-| **Backend** | SpacetimeDB (Rust Engines) |
-| **CI/CD** | GitHub Actions (Split Build/Deploy) |
-| **Deployment** | GitHub Pages |
+<p align="center">
+
+<!-- Monorepo -->
+![Turborepo](https://img.shields.io/badge/MONOREPO-Turborepo-EF4444?style=for-the-badge&logo=turborepo&logoColor=white)
+![pnpm](https://img.shields.io/badge/PKG-pnpm_10-F69220?style=for-the-badge&logo=pnpm&logoColor=white)
+
+<!-- Frontend -->
+![React](https://img.shields.io/badge/UI-React_18-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![Vite](https://img.shields.io/badge/BUILD-Vite_5-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/STYLE-Tailwind_v4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/MOTION-Framer-0055FF?style=for-the-badge&logo=framer&logoColor=white)
+
+<!-- State Management -->
+![Zustand](https://img.shields.io/badge/STATE-Zustand-443E38?style=for-the-badge&logo=react&logoColor=white)
+![Immer](https://img.shields.io/badge/IMMUTABLE-Immer-00E7C3?style=for-the-badge&logo=immer&logoColor=black)
+
+<!-- Backend -->
+![SpacetimeDB](https://img.shields.io/badge/ENGINE-SpacetimeDB_2.1-000000?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTEyIDJMMyA3djEwbDkgNSA5LTVWN2wtOS01eiIvPjwvc3ZnPg==)
+![Rust](https://img.shields.io/badge/LANG-Rust-DEA584?style=for-the-badge&logo=rust&logoColor=black)
+
+<!-- DevOps -->
+![GitHub Actions](https://img.shields.io/badge/CI/CD-GitHub_Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)
+![GitHub Pages](https://img.shields.io/badge/DEPLOY-GitHub_Pages-222222?style=for-the-badge&logo=githubpages&logoColor=white)
+
+</p>
 
 ---
 
